@@ -205,6 +205,7 @@ export default function Layout({ children }) {
                       animate={{ opacity: 1, rotate: 0 }}
                       exit={{ opacity: 0, rotate: 90 }}
                       transition={{ duration: 0.3 }}
+                      className="icon-hover"
                     >
                       <FaSun className="text-yellow-500" />
                     </motion.span>
@@ -215,6 +216,7 @@ export default function Layout({ children }) {
                       animate={{ opacity: 1, rotate: 0 }}
                       exit={{ opacity: 0, rotate: -90 }}
                       transition={{ duration: 0.3 }}
+                      className="icon-hover"
                     >
                       <FaMoon className="text-blue-800" />
                     </motion.span>

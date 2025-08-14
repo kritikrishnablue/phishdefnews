@@ -209,14 +209,27 @@ export default function Home() {
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
               >
-                <motion.div
-                  className="rounded-full h-12 w-12 border-b-2 border-teal-500 mb-4"
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                />
-                <p className={`${
+                <div className="relative mb-4">
+                  <motion.div
+                    className="loading-spinner"
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                  />
+                  <motion.div
+                    className="absolute inset-0 rounded-full border-2 border-teal-200"
+                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  />
+                </div>
+                <motion.p 
+                  className={`${
                   isDarkMode ? 'text-gray-400' : 'text-gray-600'
-                }`}>Loading latest news...</p>
+                }`}
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ duration: 1.5, repeat: Infinity }}
+                >
+                  Loading latest news...
+                </motion.p>
               </motion.div>
             )}
           </AnimatePresence>

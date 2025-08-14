@@ -272,12 +272,15 @@ function CategoryCard({ category, onClick, isDarkMode }) {
       onClick={onClick}
       whileHover={{ y: -4, scale: 1.02 }}
       whileTap={{ scale: 0.98 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
     >
       <div className="flex items-start justify-between mb-4">
         <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center`}>
           <motion.div
             whileHover={{ rotate: 10, scale: 1.1 }}
             transition={{ type: "spring", stiffness: 400, damping: 10 }}
+            className="icon-hover"
           >
             <IconComponent className="text-white text-xl" />
           </motion.div>
@@ -316,7 +319,13 @@ function CategoryCard({ category, onClick, isDarkMode }) {
           whileHover={{ x: 5 }}
         >
           Explore
-          <span className="text-sm">→</span>
+          <motion.span 
+            className="text-sm"
+            animate={{ x: [0, 3, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity }}
+          >
+            →
+          </motion.span>
         </motion.button>
       </div>
     </motion.div>

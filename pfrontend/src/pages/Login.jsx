@@ -122,12 +122,23 @@ export default function Login() {
           
           <motion.button 
             type="submit" 
-            className="w-full px-4 py-3 bg-cyan-500 text-white border border-cyan-600 rounded-lg hover:bg-cyan-600 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 btn-animated"
+            className="w-full px-4 py-3 bg-cyan-500 text-white border border-cyan-600 rounded-lg hover:bg-cyan-600 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-300 btn-animated btn-hover focus-enhanced"
             disabled={loading}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {loading ? (
+              <div className="flex items-center justify-center gap-2">
+                <motion.div
+                  className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                />
+                Signing in...
+              </div>
+            ) : (
+              'Sign In'
+            )}
           </motion.button>
           
           {error && (

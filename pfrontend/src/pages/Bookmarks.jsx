@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import NewsCard from '../components/NewsCard';
 import { userAPI } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { FaBookmark, FaTrash } from 'react-icons/fa';
 
 export default function Bookmarks() {
+  const { isDarkMode } = useTheme();
   const [bookmarks, setBookmarks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -39,115 +42,239 @@ export default function Bookmarks() {
 
   if (!isAuthenticated) {
     return (
-      <div className="p-4 max-w-4xl mx-auto">
-        <div className="bg-yellow-900 border border-yellow-700 rounded-lg p-6 text-center">
-          <FaBookmark className="text-3xl text-yellow-400 mx-auto mb-4" />
+      <div className={`p-4 max-w-4xl mx-auto min-h-screen transition-colors duration-300 ${
+        isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
+      }`}>
+        <motion.div 
+          className={`border rounded-lg p-6 text-center ${
+            isDarkMode 
+              ? 'bg-yellow-900/20 border-yellow-800' 
+              : 'bg-yellow-50 border-yellow-200'
+          }`}
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+        >
+          <motion.div
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            <FaBookmark className={`text-3xl mx-auto mb-4 ${
+              isDarkMode ? 'text-yellow-400' : 'text-yellow-600'
+            }`} />
+          </motion.div>
           <h2 className="text-xl font-semibold text-yellow-200 mb-2">Login Required</h2>
           <p className="text-yellow-100 mb-4">
             Please login to view your bookmarked articles.
           </p>
-          <a 
+          <motion.a 
             href="/login" 
-            className="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors"
+            className="inline-block px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600 transition-colors btn-hover"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             Go to Login
-          </a>
-        </div>
+          </motion.a>
+        </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="p-4 max-w-6xl mx-auto">
+    <div className={`p-4 max-w-6xl mx-auto min-h-screen transition-colors duration-300 ${
+      isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
+    }`}>
       {/* Header */}
-      <div className="mb-6">
+      <motion.div 
+        className="mb-6"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-white mb-2">Bookmarks</h1>
-            <p className="text-gray-400">
+            <h1 className={`text-3xl font-bold mb-2 ${
+              isDarkMode ? 'text-white' : 'text-gray-900'
+            }`}>Bookmarks</h1>
+            <p className={`${
+              isDarkMode ? 'text-gray-400' : 'text-gray-600'
+            }`}>
               Your saved articles and reading list
             </p>
           </div>
           {bookmarks.length > 0 && (
-            <button
+            <motion.button
               onClick={() => setBookmarks([])}
-              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors btn-hover"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
               <FaTrash className="text-sm" />
               Clear All
-            </button>
+            </motion.button>
           )}
         </div>
-      </div>
+      </motion.div>
 
       {/* Content */}
       <div>
-        {loading && (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-cyan-500 mx-auto"></div>
-            <p className="mt-2 text-gray-400">Loading bookmarks...</p>
-          </div>
-        )}
-
-        {error && (
-          <div className="bg-red-900 border border-red-700 rounded-lg p-4 mb-4">
-            <p className="text-red-200">Error: {error}</p>
-          </div>
-        )}
-
-        {!loading && !error && bookmarks.length === 0 && (
-          <div className="text-center py-8">
-            <div className="bg-gray-800 rounded-lg p-6">
-              <FaBookmark className="text-4xl text-gray-600 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-300 mb-2">No Bookmarks</h3>
-              <p className="text-gray-400 mb-4">
-                You haven't bookmarked any articles yet. Start reading and bookmark articles you want to save for later.
-              </p>
-              <a 
-                href="/" 
-                className="inline-block px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600 transition-colors"
+        <AnimatePresence mode="wait">
+          {loading && (
+            <motion.div 
+              className="text-center py-8"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+            >
+              <div className="relative mb-4">
+                <motion.div
+                  className="loading-spinner mx-auto"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                />
+              </div>
+              <motion.p 
+                className={`${
+                  isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                }`}
+                animate={{ opacity: [0.5, 1, 0.5] }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               >
-                Browse News
-              </a>
-            </div>
-          </div>
-        )}
+                Loading bookmarks...
+              </motion.p>
+            </motion.div>
+          )}
+        </AnimatePresence>
 
-        {!loading && !error && bookmarks.length > 0 && (
-          <div>
-            <div className="mb-4 p-4 bg-blue-900 border border-blue-700 rounded-lg">
-              <h3 className="font-semibold text-blue-200 mb-2">Your Bookmarks</h3>
-              <p className="text-blue-100 text-sm">
+        <AnimatePresence>
+          {error && (
+            <motion.div 
+              className={`border rounded-lg p-4 mb-4 ${
+                isDarkMode 
+                  ? 'bg-red-900/20 border-red-800' 
+                  : 'bg-red-50 border-red-200'
+              }`}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+            >
+              <p className={`${
+                isDarkMode ? 'text-red-200' : 'text-red-700'
+              }`}>Error: {error}</p>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {!loading && !error && bookmarks.length === 0 && (
+            <motion.div 
+              className="text-center py-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <div className={`rounded-lg p-6 ${
+                isDarkMode ? 'bg-gray-800' : 'bg-white border border-gray-200'
+              }`}>
+                <motion.div
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <FaBookmark className={`text-4xl mx-auto mb-4 ${
+                    isDarkMode ? 'text-gray-600' : 'text-gray-400'
+                  }`} />
+                </motion.div>
+                <h3 className={`text-lg font-semibold mb-2 ${
+                  isDarkMode ? 'text-gray-300' : 'text-gray-700'
+                }`}>No Bookmarks</h3>
+                <p className={`mb-4 ${
+                  isDarkMode ? 'text-gray-400' : 'text-gray-600'
+                }`}>
+                You haven't bookmarked any articles yet. Start reading and bookmark articles you want to save for later.
+                </p>
+                <motion.a 
+                href="/" 
+                  className="inline-block px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600 transition-colors btn-hover"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                Browse News
+                </motion.a>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <AnimatePresence>
+          {!loading && !error && bookmarks.length > 0 && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+            >
+              <motion.div 
+                className={`mb-4 p-4 border rounded-lg ${
+                  isDarkMode 
+                    ? 'bg-blue-900/20 border-blue-800' 
+                    : 'bg-blue-50 border-blue-200'
+                }`}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+              >
+                <h3 className={`font-semibold mb-2 ${
+                  isDarkMode ? 'text-blue-200' : 'text-blue-700'
+                }`}>Your Bookmarks</h3>
+                <p className={`text-sm ${
+                  isDarkMode ? 'text-blue-100' : 'text-blue-700'
+                }`}>
                 You have {bookmarks.length} bookmarked articles.
-              </p>
-            </div>
+                </p>
+              </motion.div>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {bookmarks.map(article => (
-                <div key={article.url} className="relative">
-                  <NewsCard
-                    article={article}
-                    showStatus={true}
-                  />
-                  <button
-                    onClick={() => handleUnbookmark(article)}
-                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-10"
-                    title="Remove bookmark"
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {bookmarks.map((article, index) => (
+                  <motion.div 
+                    key={article.url} 
+                    className="relative"
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: index * 0.1 }}
                   >
-                    <FaTrash className="text-xs" />
-                  </button>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
+                    <NewsCard
+                      article={article}
+                      showStatus={true}
+                    />
+                    <motion.button
+                      onClick={() => handleUnbookmark(article)}
+                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-10"
+                      title="Remove bookmark"
+                      whileHover={{ scale: 1.1 }}
+                      whileTap={{ scale: 0.95 }}
+                    >
+                      <FaTrash className="text-xs" />
+                    </motion.button>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Stats */}
       {!loading && !error && bookmarks.length > 0 && (
-        <div className="mt-8 p-4 bg-gray-800 rounded-lg">
-          <h3 className="font-semibold mb-2 text-white">Bookmarks Summary</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm text-gray-300">
+        <motion.div 
+          className={`mt-8 p-4 rounded-lg ${
+            isDarkMode ? 'bg-gray-800' : 'bg-white border border-gray-200'
+          }`}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5 }}
+        >
+          <h3 className={`font-semibold mb-2 ${
+            isDarkMode ? 'text-white' : 'text-gray-900'
+          }`}>Bookmarks Summary</h3>
+          <div className={`grid grid-cols-2 md:grid-cols-4 gap-4 text-sm ${
+            isDarkMode ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             <div>
               <span className="font-medium">Total Bookmarks:</span> {bookmarks.length}
             </div>
@@ -167,7 +294,7 @@ export default function Bookmarks() {
               }
             </div>
           </div>
-        </div>
+        </motion.div>
       )}
     </div>
   );

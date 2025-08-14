@@ -6,6 +6,7 @@ import { appleOAuth } from '../services/appleOAuth';
 import { FaGoogle, FaApple, FaEye, FaEyeSlash, FaUser, FaEnvelope, FaLock } from 'react-icons/fa';
 
 export default function Register() {
+  const { register } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -18,8 +19,7 @@ export default function Register() {
   const [oauthLoading, setOauthLoading] = useState({ google: false, apple: false });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  const { register, googleOAuth: authGoogleOAuth, appleOAuth: authAppleOAuth, error } = useAuth();
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -94,68 +94,18 @@ export default function Register() {
     }
   };
 
-  const handleGoogleSignIn = async () => {
-    setOauthLoading(prev => ({ ...prev, google: true }));
-    try {
-      // Get Google ID token
-      const idToken = await googleOAuth.signInWithIdToken();
-      
-      // Send to backend for verification
-      await authGoogleOAuth(idToken);
-      navigate('/');
-    } catch (err) {
-      console.error('Google OAuth error:', err);
-      // You might want to show this error to the user
-    } finally {
-      setOauthLoading(prev => ({ ...prev, google: false }));
-    }
-  };
+  
 
-  const handleAppleSignIn = async () => {
-    setOauthLoading(prev => ({ ...prev, apple: true }));
-    try {
-      // Get Apple ID token
-      const idToken = await appleOAuth.signInWithSDK();
-      
-      // Send to backend for verification
-      await authAppleOAuth(idToken);
-      navigate('/');
-    } catch (err) {
-      console.error('Apple OAuth error:', err);
-      // You might want to show this error to the user
-    } finally {
-      setOauthLoading(prev => ({ ...prev, apple: false }));
-    }
-  };
 
   return (
     <div className="p-4 max-w-md mx-auto flex items-center justify-center min-h-[80vh]">
       <div className="bg-gray-800 shadow-lg rounded-lg p-8 w-full border border-gray-700">
         <h1 className="text-2xl font-bold mb-6 text-center text-cyan-400">Create an Account</h1>
         
-        {/* Social Sign-in Buttons */}
-        <div className="mb-6 space-y-3">
-          <button
-            type="button"
-            onClick={handleGoogleSignIn}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-white text-gray-800 rounded-lg hover:bg-gray-100 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={oauthLoading.google || oauthLoading.apple}
-          >
-            <FaGoogle className="text-red-500" />
-            {oauthLoading.google ? 'Signing in...' : 'Continue with Google'}
-          </button>
+      
+         
           
-          <button
-            type="button"
-            onClick={handleAppleSignIn}
-            className="w-full flex items-center justify-center gap-3 px-4 py-3 bg-black text-white rounded-lg hover:bg-gray-900 transition-colors font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
-            disabled={oauthLoading.apple || oauthLoading.google}
-          >
-            <FaApple />
-            {oauthLoading.apple ? 'Signing in...' : 'Continue with Apple'}
-          </button>
-        </div>
-
+          
         {/* Divider */}
         <div className="relative mb-6">
           <div className="absolute inset-0 flex items-center">
@@ -284,17 +234,17 @@ export default function Register() {
           <button 
             type="submit" 
             className="w-full px-4 py-3 bg-cyan-500 text-white border border-cyan-600 rounded-lg hover:bg-cyan-600 font-semibold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-            disabled={loading || oauthLoading.google || oauthLoading.apple}
+            disabled={loading}
           >
             {loading ? 'Creating account...' : 'Create Account'}
           </button>
 
           {/* Error Display */}
-          {error && (
+          {/* {error && (
             <div className="text-red-400 text-center text-sm bg-red-900/20 border border-red-500 rounded-lg p-3">
               {error}
             </div>
-          )}
+          )} */}
         </form>
 
         {/* Login Link */}

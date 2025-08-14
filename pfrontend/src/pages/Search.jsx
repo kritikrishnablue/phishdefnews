@@ -13,7 +13,9 @@ export default function Search() {
   const [error, setError] = useState(null);
   // Search on mount or when keyword changes
   useEffect(() => {
-    if (location.state?.keyword) {
+    if (location.state?.category) {
+      handleSearchByCategory(location.state.category);
+    } else if (location.state?.keyword) {
       setSearchInput(location.state.keyword);
       handleSearch(location.state.keyword);
     }
@@ -26,6 +28,19 @@ export default function Search() {
     setError(null);
     try {
       const data = await newsAPI.searchNews({ keywords: input });
+      setArticles(data.results || []);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSearchByCategory = async (category) => {
+    setLoading(true);
+    setError(null);
+    try {
+      const data = await newsAPI.searchNews({ category });
       setArticles(data.results || []);
     } catch (err) {
       setError(err.message);

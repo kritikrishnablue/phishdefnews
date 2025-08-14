@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { FaCog, FaUser, FaShieldAlt, FaGlobe, FaMapPin, FaTag, FaPlus, FaTimes } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 export default function Settings() {
   const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('preferences');
   const [newsSources, setNewsSources] = useState([
     // Major International News Sources
@@ -215,11 +217,17 @@ export default function Settings() {
           <h2 className="text-white dark:text-white text-gray-900 text-2xl font-bold mb-2">Login to your account</h2>
           <p className="text-gray-400 dark:text-gray-400 text-gray-600 mb-8">Access personalized features and save your preferences</p>
           <div className="flex gap-4 justify-center">
-            <button className="px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors flex items-center gap-2">
+            <button
+              onClick={() => navigate('/login')}
+              className="px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors flex items-center gap-2"
+            >
               Login
               <span>→</span>
             </button>
-            <button className="px-6 py-3 bg-gray-700 dark:bg-gray-700 bg-gray-200 text-gray-300 dark:text-gray-300 text-gray-700 rounded-lg hover:bg-gray-600 dark:hover:bg-gray-600 transition-colors flex items-center gap-2">
+            <button
+              onClick={() => navigate('/register')}
+              className="px-6 py-3 bg-gray-700 dark:bg-gray-700 bg-gray-200 text-gray-300 dark:text-gray-300 text-gray-700 rounded-lg hover:bg-gray-600 dark:hover:bg-gray-600 transition-colors flex items-center gap-2"
+            >
               <FaPlus className="text-sm" />
               <FaUser className="text-sm" />
               Create Account
@@ -362,4 +370,4 @@ export default function Settings() {
       </div>
     </div>
   );
-} 
+}

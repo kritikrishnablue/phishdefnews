@@ -272,20 +272,34 @@ export default function Layout({ children }) {
                       className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-800 rounded-lg shadow-lg z-50 border border-gray-200 dark:border-gray-700"
                     >
                       <div className="flex flex-col py-2">
-                        <NavLink
-                          to="/login"
-                          className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
-                          onClick={() => setShowProfileDropdown(false)}
-                        >
-                          Login
-                        </NavLink>
-                        <NavLink
-                          to="/register"
-                          className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
-                          onClick={() => setShowProfileDropdown(false)}
-                        >
-                          Sign Up
-                        </NavLink>
+                        {isAuthenticated ? (
+                          <button
+                            className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                            onClick={() => {
+                              handleLogout();
+                              setShowProfileDropdown(false);
+                            }}
+                          >
+                            Logout
+                          </button>
+                        ) : (
+                          <>
+                            <NavLink
+                              to="/login"
+                              className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                              onClick={() => setShowProfileDropdown(false)}
+                            >
+                              Login
+                            </NavLink>
+                            <NavLink
+                              to="/register"
+                              className="px-4 py-2 text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 rounded transition-colors"
+                              onClick={() => setShowProfileDropdown(false)}
+                            >
+                              Sign Up
+                            </NavLink>
+                          </>
+                        )}
                       </div>
                     </motion.div>
                   )}

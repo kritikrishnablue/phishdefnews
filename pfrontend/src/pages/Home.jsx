@@ -126,19 +126,19 @@ export default function Home() {
   // ];
 
   return (
-    <div className={`min-h-screen theme-transition ${
+    <div className={`min-h-screen theme-transition-medium page-transition ${
       isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
       {/* Trending Topics Bar */}
       <motion.div
-        className={`border-b px-6 py-4 theme-transition ${
+        className={`border-b px-6 py-4 theme-transition-fast ${
           isDarkMode
             ? 'bg-gray-800 border-gray-700'
             : 'bg-white border-gray-200'
         }`}
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="flex items-center gap-4">
           <div className="flex items-center gap-2">
@@ -181,11 +181,11 @@ export default function Home() {
           className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h1 className={`text-3xl font-bold mb-2 ${
+              <h1 className={`text-3xl font-bold mb-2 gradient-text ${
                 isDarkMode ? 'text-white' : 'text-gray-900'
               }`}>
                 {filters.category ? `${filters.category.charAt(0).toUpperCase() + filters.category.slice(1)} News` : 'Latest News'}
@@ -211,22 +211,22 @@ export default function Home() {
               >
                 <div className="relative mb-4">
                   <motion.div
-                    className="loading-spinner"
+                    className="loading-spinner loading-enhanced"
                     animate={{ rotate: 360 }}
                     transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                   />
                   <motion.div
                     className="absolute inset-0 rounded-full border-2 border-teal-200"
-                    animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-                    transition={{ duration: 2, repeat: Infinity }}
+                    animate={{ scale: [1, 1.4, 1], opacity: [0.7, 0, 0.7] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                   />
                 </div>
                 <motion.p 
                   className={`${
                   isDarkMode ? 'text-gray-400' : 'text-gray-600'
                 }`}
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 1.5, repeat: Infinity }}
+                  animate={{ opacity: [0.4, 1, 0.4] }}
+                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
                 >
                   Loading latest news...
                 </motion.p>
@@ -237,23 +237,28 @@ export default function Home() {
           <AnimatePresence>
             {error && (
               <motion.div
-                className={`border rounded-xl p-6 ${
+                className={`border rounded-xl p-6 theme-transition-fast ${
                   isDarkMode
                     ? 'bg-red-900/20 border-red-800'
                     : 'bg-red-50 border-red-200'
                 }`}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.9, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                  <motion.div 
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
                     isDarkMode ? 'bg-red-900' : 'bg-red-100'
-                  }`}>
+                  }`}
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity }}
+                  >
                     <span className={`text-sm ${
                       isDarkMode ? 'text-red-400' : 'text-red-600'
                     }`}>⚠</span>
-                  </div>
+                  </motion.div>
                   <div>
                     <h3 className={`font-semibold ${
                       isDarkMode ? 'text-red-200' : 'text-red-800'
@@ -274,14 +279,19 @@ export default function Home() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                <div className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
+                <motion.div 
+                  className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
                   isDarkMode ? 'bg-gray-800' : 'bg-gray-200'
-                }`}>
-                  <FaNewspaper className={`text-xl ${
+                }`}
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  <FaNewspaper className={`text-xl icon-sleek ${
                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
                   }`} />
-                </div>
+                </motion.div>
                 <h3 className={`text-lg font-semibold mb-2 ${
                   isDarkMode ? 'text-white' : 'text-gray-900'
                 }`}>No Articles Found</h3>
@@ -294,19 +304,19 @@ export default function Home() {
 
           {!loading && !error && articles.length > 0 && (
             <motion.div
-              className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6"
+              className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.6 }}
+              transition={{ duration: 0.7, ease: "easeOut" }}
             >
               {articles.map((article, index) => (
                 <motion.div
                   key={article.url || article.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{
-                    duration: 0.5,
-                    delay: index * 0.1,
+                    duration: 0.6,
+                    delay: index * 0.08,
                     ease: "easeOut"
                   }}
                 >

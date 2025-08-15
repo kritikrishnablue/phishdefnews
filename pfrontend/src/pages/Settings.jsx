@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
+import { motion, AnimatePresence } from 'framer-motion';
 import { FaCog, FaUser, FaShieldAlt, FaGlobe, FaMapPin, FaTag, FaPlus, FaTimes } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
 export default function Settings() {
   const { user, isAuthenticated } = useAuth();
+  const { isDarkMode } = useTheme();
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('preferences');
   const [newsSources, setNewsSources] = useState([
@@ -318,55 +321,112 @@ export default function Settings() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 dark:bg-gray-900 bg-white">
+    <div className={`min-h-screen theme-transition-medium page-transition ${
+      isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
+    }`}>
       <div className="flex">
         {/* Sidebar Navigation */}
-        <div className="w-64 bg-gray-800 dark:bg-gray-800 bg-gray-100 min-h-screen p-6">
-          <h1 className="text-white dark:text-white text-gray-900 text-2xl font-bold mb-2">Settings</h1>
-          <p className="text-gray-400 dark:text-gray-400 text-gray-600 text-sm mb-8">Customize your news experience and manage your account</p>
+        <motion.div 
+          className={`w-64 min-h-screen p-6 theme-transition-fast ${
+            isDarkMode ? 'bg-gray-800' : 'bg-white border-r border-gray-200'
+          }`}
+          initial={{ x: -20, opacity: 0 }}
+          animate={{ x: 0, opacity: 1 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
+          <motion.h1 
+            className={`text-2xl font-bold mb-2 gradient-text ${
+              isDarkMode ? 'text-white' : 'text-gray-900'
+            }`}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.5 }}
+          >
+            Settings
+          </motion.h1>
+          <motion.p 
+            className={`text-sm mb-8 ${
+              isDarkMode ? 'text-gray-400' : 'text-gray-600'
+            }`}
+            initial={{ opacity: 0, y: -5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            Customize your news experience and manage your account
+          </motion.p>
           
           <nav className="space-y-2">
-            <button
+            <motion.button
               onClick={() => setActiveTab('preferences')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg theme-transition-fast btn-sleek tab-sleek ${
                 activeTab === 'preferences'
-                  ? 'bg-cyan-500 text-white'
-                  : 'text-gray-300 dark:text-gray-300 text-gray-700 hover:text-white dark:hover:text-white hover:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700'
-              }`}
+                  ? 'bg-cyan-500 text-white active'
+                  : `${isDarkMode 
+                      ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                    }`
+              } ${activeTab === 'preferences' ? 'active' : ''}`}
+              whileHover={{ scale: 1.02, x: 5 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <FaCog className="text-sm" />
+              <FaCog className="text-sm icon-sleek" />
               Preferences
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => setActiveTab('profile')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg theme-transition-fast btn-sleek tab-sleek ${
                 activeTab === 'profile'
-                  ? 'bg-cyan-500 text-white'
-                  : 'text-gray-300 dark:text-gray-300 text-gray-700 hover:text-white dark:hover:text-white hover:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700'
-              }`}
+                  ? 'bg-cyan-500 text-white active'
+                  : `${isDarkMode 
+                      ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                    }`
+              } ${activeTab === 'profile' ? 'active' : ''}`}
+              whileHover={{ scale: 1.02, x: 5 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <FaUser className="text-sm" />
+              <FaUser className="text-sm icon-sleek" />
               User Profile
-            </button>
-            <button
+            </motion.button>
+            <motion.button
               onClick={() => setActiveTab('privacy')}
-              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+              className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg theme-transition-fast btn-sleek tab-sleek ${
                 activeTab === 'privacy'
-                  ? 'bg-cyan-500 text-white'
-                  : 'text-gray-300 dark:text-gray-300 text-gray-700 hover:text-white dark:hover:text-white hover:text-gray-900 hover:bg-gray-700 dark:hover:bg-gray-700'
-              }`}
+                  ? 'bg-cyan-500 text-white active'
+                  : `${isDarkMode 
+                      ? 'text-gray-300 hover:text-white hover:bg-gray-700' 
+                      : 'text-gray-700 hover:text-gray-900 hover:bg-gray-100'
+                    }`
+              } ${activeTab === 'privacy' ? 'active' : ''}`}
+              whileHover={{ scale: 1.02, x: 5 }}
+              whileTap={{ scale: 0.98 }}
             >
-              <FaShieldAlt className="text-sm" />
+              <FaShieldAlt className="text-sm icon-sleek" />
               Privacy & Security
-            </button>
+            </motion.button>
 
           </nav>
-        </div>
+        </motion.div>
 
         {/* Main Content */}
-        <div className="flex-1 p-8">
-          {renderContent()}
-        </div>
+        <motion.div 
+          className="flex-1 p-8"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
+        >
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeTab}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+            >
+              {renderContent()}
+            </motion.div>
+          </AnimatePresence>
+        </motion.div>
       </div>
     </div>
   );

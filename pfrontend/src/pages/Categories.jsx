@@ -131,7 +131,7 @@ export default function Categories() {
 
 
   return (
-    <div className={`p-4 max-w-6xl mx-auto min-h-screen theme-transition ${
+    <div className={`p-4 max-w-6xl mx-auto min-h-screen theme-transition-medium page-transition ${
       isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
       {/* Header */}
@@ -139,9 +139,9 @@ export default function Categories() {
         className="mb-8"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+        transition={{ duration: 0.7, ease: "easeOut" }}
       >
-        <h1 className={`text-3xl font-bold mb-2 ${
+        <h1 className={`text-3xl font-bold mb-2 gradient-text ${
           isDarkMode ? 'text-white' : 'text-gray-900'
         }`}>Categories</h1>
         <p className={`${
@@ -160,7 +160,7 @@ export default function Categories() {
             exit={{ opacity: 0 }}
           >
             <motion.div 
-              className="rounded-full h-8 w-8 border-b-2 border-cyan-500 mx-auto"
+              className="rounded-full h-8 w-8 border-b-2 border-cyan-500 mx-auto loading-enhanced"
               animate={{ rotate: 360 }}
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
@@ -172,7 +172,7 @@ export default function Categories() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.6 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
           >
             {/* Trending Categories */}
             <div className="mb-8">
@@ -180,28 +180,28 @@ export default function Categories() {
                 className="flex items-center gap-2 mb-6"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
               >
                 <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <FaFire className="text-orange-500 text-lg" />
+                  <FaFire className="text-orange-500 text-lg icon-sleek" />
                 </motion.div>
                 <h2 className={`text-2xl font-bold ${
                   isDarkMode ? 'text-white' : 'text-gray-900'
                 }`}>Trending Categories</h2>
               </motion.div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {trendingCategories.map((category, index) => (
                   <motion.div
                     key={category.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ 
-                      duration: 0.5, 
-                      delay: index * 0.1,
+                      duration: 0.6, 
+                      delay: index * 0.08,
                       ease: "easeOut"
                     }}
                   >
@@ -221,7 +221,7 @@ export default function Categories() {
                 className="flex items-center justify-between mb-6"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+                transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
               >
                 <h2 className={`text-2xl font-bold ${
                   isDarkMode ? 'text-white' : 'text-gray-900'
@@ -231,15 +231,15 @@ export default function Categories() {
                 }`}>{allCategories.length} categories available</span>
               </motion.div>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                 {allCategories.map((category, index) => (
                   <motion.div
                     key={category.id}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ 
-                      duration: 0.5, 
-                      delay: (index + trendingCategories.length) * 0.05,
+                      duration: 0.6, 
+                      delay: (index + trendingCategories.length) * 0.04,
                       ease: "easeOut"
                     }}
                   >
@@ -264,13 +264,13 @@ function CategoryCard({ category, onClick, isDarkMode }) {
   
   return (
     <motion.div 
-      className={`rounded-lg p-6 cursor-pointer border transition-all duration-300 hover-lift ${
+      className={`rounded-lg p-6 cursor-pointer border theme-transition-fast hover-lift-enhanced ${
         isDarkMode 
           ? 'bg-gray-800 hover:bg-gray-700 border-gray-700 hover:border-gray-600' 
           : 'bg-white hover:bg-gray-50 border-gray-200 hover:border-gray-300'
       }`}
       onClick={onClick}
-      whileHover={{ y: -4, scale: 1.02 }}
+      whileHover={{ y: -8, scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
@@ -278,9 +278,9 @@ function CategoryCard({ category, onClick, isDarkMode }) {
       <div className="flex items-start justify-between mb-4">
         <div className={`w-12 h-12 ${category.color} rounded-lg flex items-center justify-center`}>
           <motion.div
-            whileHover={{ rotate: 10, scale: 1.1 }}
-            transition={{ type: "spring", stiffness: 400, damping: 10 }}
-            className="icon-hover"
+            whileHover={{ rotate: 15, scale: 1.2 }}
+            transition={{ type: "spring", stiffness: 500, damping: 15 }}
+            className="icon-sleek"
           >
             <IconComponent className="text-white text-xl" />
           </motion.div>
@@ -288,10 +288,10 @@ function CategoryCard({ category, onClick, isDarkMode }) {
         {category.trending && (
           <motion.div 
             className="flex items-center gap-1 bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium"
-            animate={{ scale: [1, 1.05, 1] }}
-            transition={{ duration: 2, repeat: Infinity }}
+            animate={{ scale: [1, 1.1, 1] }}
+            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <FaFire className="text-xs" />
+            <FaFire className="text-xs icon-sleek" />
             Trending
           </motion.div>
         )}
@@ -311,18 +311,18 @@ function CategoryCard({ category, onClick, isDarkMode }) {
           isDarkMode ? 'text-gray-500' : 'text-gray-600'
         }`}>{category.articleCount} articles</span>
         <motion.button 
-          className={`flex items-center gap-1 font-medium transition-colors duration-300 ${
+          className={`flex items-center gap-1 font-medium theme-transition-fast ${
             isDarkMode 
               ? 'text-green-400 hover:text-green-300' 
               : 'text-green-600 hover:text-green-700'
           }`}
-          whileHover={{ x: 5 }}
+          whileHover={{ x: 8, scale: 1.05 }}
         >
           Explore
           <motion.span 
             className="text-sm"
-            animate={{ x: [0, 3, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity }}
+            animate={{ x: [0, 4, 0] }}
+            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
             →
           </motion.span>

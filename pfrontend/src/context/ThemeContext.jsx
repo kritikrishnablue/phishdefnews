@@ -20,6 +20,7 @@ export const ThemeProvider = ({ children }) => {
     // Check system preference
     return window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
+  const [isToggling, setIsToggling] = useState(false);
 
   useEffect(() => {
     // Save theme preference to localStorage
@@ -63,11 +64,16 @@ export const ThemeProvider = ({ children }) => {
   }, []);
 
   const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
+    setIsToggling(true);
+    setTimeout(() => {
+      setIsDarkMode(!isDarkMode);
+      setTimeout(() => setIsToggling(false), 300);
+    }, 150);
   };
 
   const value = {
     isDarkMode,
+    isToggling,
     toggleTheme,
     theme: isDarkMode ? 'dark' : 'light'
   };

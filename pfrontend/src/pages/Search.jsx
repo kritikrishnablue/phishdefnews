@@ -68,7 +68,7 @@ export default function Search() {
   };
 
   return (
-    <div className={`p-4 max-w-6xl mx-auto min-h-screen transition-colors duration-300 ${
+    <div className={`p-4 max-w-6xl mx-auto min-h-screen theme-transition-medium page-transition ${
       isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
       {/* Header */}
@@ -76,9 +76,9 @@ export default function Search() {
         className="mb-6"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <h1 className={`text-3xl font-bold mb-2 ${
+        <h1 className={`text-3xl font-bold mb-2 gradient-text ${
           isDarkMode ? 'text-white' : 'text-gray-900'
         }`}>Search News</h1>
         <p className={`${
@@ -94,44 +94,44 @@ export default function Search() {
         className="mb-8 flex flex-col sm:flex-row gap-4 items-center"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
+        transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
       >
         <motion.input
           type="text"
           value={searchInput}
           onChange={handleInputChange}
           placeholder="Type any word, phrase, paragraph, or category..."
-          className={`flex-1 px-4 py-3 border rounded-lg text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 transition-all duration-300 focus-enhanced ${
+          className={`flex-1 px-4 py-3 border rounded-lg text-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-cyan-400 theme-transition-fast focus-enhanced ${
             isDarkMode 
               ? 'border-gray-600 bg-gray-700 text-white' 
               : 'border-gray-300 bg-white text-gray-900'
           }`}
-          whileFocus={{ scale: 1.02 }}
+          whileFocus={{ scale: 1.03, y: -2 }}
         />
         <motion.button
           type="submit"
-          className="px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 transition-colors flex items-center gap-2 text-lg btn-hover"
+          className="px-6 py-3 bg-cyan-500 text-white rounded-lg hover:bg-cyan-600 theme-transition-fast flex items-center gap-2 text-lg btn-sleek"
           disabled={loading}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.08, y: -2 }}
           whileTap={{ scale: 0.95 }}
         >
           <motion.div
             animate={loading ? { rotate: 360 } : {}}
             transition={{ duration: 1, repeat: loading ? Infinity : 0, ease: "linear" }}
           >
-            <FaSearch className="text-xl" />
+            <FaSearch className="text-xl icon-sleek" />
           </motion.div>
           {loading ? 'Searching...' : 'Search'}
         </motion.button>
         <motion.button
           type="button"
           onClick={clearResults}
-          className={`px-4 py-3 text-lg transition-colors ${
+          className={`px-4 py-3 text-lg theme-transition-fast btn-sleek ${
             isDarkMode 
               ? 'text-gray-400 hover:text-gray-300' 
               : 'text-gray-500 hover:text-gray-700'
           }`}
-          whileHover={{ scale: 1.05 }}
+          whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.95 }}
         >
           Clear
@@ -150,22 +150,22 @@ export default function Search() {
             >
               <div className="relative mb-4">
                 <motion.div
-                  className="loading-spinner mx-auto"
+                  className="loading-spinner loading-enhanced mx-auto"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 />
                 <motion.div
                   className="absolute inset-0 rounded-full border-2 border-cyan-200 mx-auto"
-                  animate={{ scale: [1, 1.2, 1], opacity: [0.5, 0, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={{ scale: [1, 1.4, 1], opacity: [0.7, 0, 0.7] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 />
               </div>
               <motion.p 
                 className={`${
                   isDarkMode ? 'text-gray-400' : 'text-gray-600'
                 }`}
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
                 Searching...
               </motion.p>
@@ -176,14 +176,15 @@ export default function Search() {
         <AnimatePresence>
           {error && (
             <motion.div 
-              className={`border rounded-lg p-4 mb-4 ${
+              className={`border rounded-lg p-4 mb-4 theme-transition-fast ${
                 isDarkMode 
                   ? 'bg-red-900/20 border-red-800' 
                   : 'bg-red-50 border-red-200'
               }`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <p className={`${
                 isDarkMode ? 'text-red-200' : 'text-red-700'
@@ -198,15 +199,17 @@ export default function Search() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <motion.div 
-                className={`mb-4 p-4 border rounded-lg ${
+                className={`mb-4 p-4 border rounded-lg theme-transition-fast ${
                   isDarkMode 
                     ? 'bg-green-900/20 border-green-800' 
                     : 'bg-green-50 border-green-200'
                 }`}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <h3 className={`font-semibold mb-2 ${
                   isDarkMode ? 'text-green-200' : 'text-green-700'
@@ -217,13 +220,13 @@ export default function Search() {
                 Found {articles.length} articles matching your search.
                 </p>
               </motion.div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {articles.map((article, index) => (
                   <motion.div
                     key={article.url || article.title}
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
                   >
                     <NewsCard
                       article={article}
@@ -243,12 +246,13 @@ export default function Search() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <motion.div
-                animate={{ scale: [1, 1.1, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={{ scale: [1, 1.15, 1] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                <FaSearch className={`text-4xl mx-auto mb-4 ${
+                <FaSearch className={`text-4xl mx-auto mb-4 icon-sleek ${
                   isDarkMode ? 'text-gray-600' : 'text-gray-400'
                 }`} />
               </motion.div>
@@ -268,12 +272,12 @@ export default function Search() {
       {/* Search Stats */}
       {!loading && !error && articles.length > 0 && (
         <motion.div 
-          className={`mt-8 p-4 rounded-lg ${
+          className={`mt-8 p-4 rounded-lg theme-transition-fast ${
             isDarkMode ? 'bg-gray-800' : 'bg-gray-100'
           }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
         >
           <h3 className={`font-semibold mb-2 ${
             isDarkMode ? 'text-white' : 'text-gray-900'

@@ -546,3 +546,221 @@ button, a, input, select, textarea {
 .float-animation {
   animation: float 3s ease-in-out infinite;
 }
+
+/* Enhanced Dark Mode Transitions */
+.theme-transition-fast {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-transition-medium {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-transition-slow {
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced Card Animations */
+.news-card-enhanced {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+.news-card-enhanced:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.dark .news-card-enhanced:hover {
+  box-shadow: 0 25px 50px -12px rgba(20, 184, 166, 0.2);
+}
+
+/* Sleek Button Animations */
+.btn-sleek {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateZ(0);
+}
+
+.btn-sleek::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.btn-sleek:hover::before {
+  left: 100%;
+}
+
+.btn-sleek:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.dark .btn-sleek:hover {
+  box-shadow: 0 8px 25px rgba(20, 184, 166, 0.3);
+}
+
+/* Icon Animations */
+.icon-sleek {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.icon-sleek:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.icon-pulse {
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+/* Enhanced Loading Animations */
+.loading-enhanced {
+  position: relative;
+}
+
+.loading-enhanced::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(90deg, transparent 25%, rgba(255, 255, 255, 0.1) 50%, transparent 75%);
+  animation: shimmerEnhanced 2s infinite;
+}
+
+.dark .loading-enhanced::after {
+  background: linear-gradient(90deg, transparent 25%, rgba(20, 184, 166, 0.1) 50%, transparent 75%);
+}
+
+@keyframes shimmerEnhanced {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Tab Animations */
+.tab-sleek {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.tab-sleek::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #14b8a6, #06b6d4);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform: translateX(-50%);
+}
+
+.tab-sleek.active::after,
+.tab-sleek:hover::after {
+  width: 100%;
+}
+
+/* Dark Mode Toggle Animation */
+.theme-toggle {
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+}
+
+.theme-toggle.toggling {
+  animation: themeToggleAnimation 0.6s ease-in-out;
+}
+
+@keyframes themeToggleAnimation {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+  25% {
+    transform: scale(1.2) rotate(90deg);
+  }
+  50% {
+    transform: scale(0.8) rotate(180deg);
+  }
+  75% {
+    transform: scale(1.1) rotate(270deg);
+  }
+  100% {
+    transform: scale(1) rotate(360deg);
+  }
+}
+
+/* Smooth Page Transitions */
+.page-transition {
+  animation: pageEnter 0.5s ease-out;
+}
+
+@keyframes pageEnter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Hover Effects */
+.hover-lift-enhanced {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift-enhanced:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.dark .hover-lift-enhanced:hover {
+  box-shadow: 0 12px 30px rgba(20, 184, 166, 0.2);
+}
+
+/* Gradient Text Animation */
+.gradient-text {
+  background: linear-gradient(45deg, #14b8a6, #06b6d4, #8b5cf6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}

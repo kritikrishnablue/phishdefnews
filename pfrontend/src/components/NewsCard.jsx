@@ -165,15 +165,15 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
   return (
     <>
       <motion.div 
-        className={`news-card-enhanced rounded-lg overflow-hidden transition-all duration-300 border ${
+        className={`news-card-enhanced rounded-lg overflow-hidden theme-transition-medium border hover-lift-enhanced ${
           isDarkMode 
             ? 'bg-gray-800 border-gray-700 hover:border-gray-600 hover:bg-gray-750' 
             : 'bg-white border-gray-200 hover:border-gray-300 hover:bg-gray-50'
         }`}
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        whileHover={{ y: -8, scale: 1.02 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+        whileHover={{ y: -12, scale: 1.03 }}
       >
         {/* Article Image */}
         <div className="relative">
@@ -254,8 +254,8 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
                 ? 'bg-black/50 hover:bg-black/70' 
                 : 'bg-white/80 hover:bg-white/90'
             }`}
-            whileTap={{ scale: 1.3, rotate: 20 }}
-            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 1.4, rotate: 25 }}
+            whileHover={{ scale: 1.15 }}
             aria-label="Bookmark"
             disabled={loading}
           >
@@ -263,24 +263,24 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
               {isBookmarked ? (
                 <motion.span
                   key="bookmarked"
-                  initial={{ scale: 0.7, rotate: -30, opacity: 0 }}
+                  initial={{ scale: 0.5, rotate: -45, opacity: 0 }}
                   animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                  exit={{ scale: 0.7, rotate: 30, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  exit={{ scale: 0.5, rotate: 45, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 25 }}
                 >
-                  <FaBookmark className="text-teal-400 text-sm" />
+                  <FaBookmark className="text-teal-400 text-sm icon-sleek" />
                 </motion.span>
               ) : (
                 <motion.span
                   key="not-bookmarked"
-                  initial={{ scale: 0.7, rotate: 30, opacity: 0 }}
+                  initial={{ scale: 0.5, rotate: 45, opacity: 0 }}
                   animate={{ scale: 1, rotate: 0, opacity: 1 }}
-                  exit={{ scale: 0.7, rotate: -30, opacity: 0 }}
-                  transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  exit={{ scale: 0.5, rotate: -45, opacity: 0 }}
+                  transition={{ type: 'spring', stiffness: 500, damping: 25 }}
                 >
                   <FaBookmark className={`text-sm ${
                     isDarkMode ? 'text-gray-400' : 'text-gray-500'
-                  }`} />
+                  } icon-sleek`} />
                 </motion.span>
               )}
             </AnimatePresence>
@@ -290,19 +290,23 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
               >
-                <div className="w-3 h-3 border border-teal-400 border-t-transparent rounded-full animate-spin" />
+                <motion.div 
+                  className="w-3 h-3 border border-teal-400 border-t-transparent rounded-full"
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                />
               </motion.div>
             )}
           </motion.button>
         </div>
 
         {/* Article Content */}
-        <div className="p-4 card-content">
+        <div className="p-4 card-content theme-transition-fast">
           {/* Source and Date */}
           <div className="flex items-center justify-between mb-3">
             <motion.span 
-              className="text-teal-400 text-sm font-medium text-glow"
-              whileHover={{ scale: 1.05 }}
+              className="text-teal-400 text-sm font-medium text-glow gradient-text"
+              whileHover={{ scale: 1.08 }}
             >
               {article.source?.name || article.source || 'News Source'}
             </motion.span>
@@ -311,9 +315,9 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
             }`}>
               <motion.div
                 animate={{ rotate: [0, 360] }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
               >
-                <FaClock className="text-xs" />
+                <FaClock className="text-xs icon-sleek" />
               </motion.div>
               <span>{article.publishedAt ? new Date(article.publishedAt).toLocaleDateString() : 'Unknown date'}</span>
             </div>
@@ -323,8 +327,8 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
           <div className="flex items-center gap-2 mb-3">
             <motion.span 
               className="text-yellow-400 text-sm"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
             >
               ⚡
             </motion.span>
@@ -335,12 +339,12 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
 
           {/* Title */}
           <motion.h3 
-            className={`font-bold text-lg mb-3 line-clamp-2 cursor-pointer transition-colors leading-tight ${
+            className={`font-bold text-lg mb-3 line-clamp-2 cursor-pointer theme-transition-fast leading-tight ${
               isDarkMode 
                 ? 'text-white hover:text-teal-400' 
                 : 'text-gray-900 hover:text-teal-600'
             }`}
-            whileHover={{ scale: 1.02 }}
+            whileHover={{ scale: 1.03, x: 5 }}
             onClick={handleReadFullArticle}
           >
             {article.title}
@@ -362,20 +366,20 @@ export default function NewsCard({ article, onLike, onBookmark, onShare, showSta
             </div>
             <motion.button
               onClick={handleReadFullArticle}
-              className={`flex items-center gap-2 px-3 py-1 text-sm font-medium transition-colors btn-hover ${
+              className={`flex items-center gap-2 px-3 py-1 text-sm font-medium theme-transition-fast btn-sleek ${
                 isDarkMode 
                   ? 'text-teal-400 hover:text-teal-300' 
                   : 'text-teal-600 hover:text-teal-700'
               }`}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.08, x: 3 }}
               whileTap={{ scale: 0.95 }}
             >
               Read full article
               <motion.div
-                animate={{ x: [0, 2, 0] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                animate={{ x: [0, 3, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
-                <FaExternalLinkAlt className="text-xs" />
+                <FaExternalLinkAlt className="text-xs icon-sleek" />
               </motion.div>
             </motion.button>
           </div>

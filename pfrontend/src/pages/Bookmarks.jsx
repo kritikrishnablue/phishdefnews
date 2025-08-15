@@ -80,7 +80,7 @@ export default function Bookmarks() {
   }
 
   return (
-    <div className={`p-4 max-w-6xl mx-auto min-h-screen transition-colors duration-300 ${
+    <div className={`p-4 max-w-6xl mx-auto min-h-screen theme-transition-medium page-transition ${
       isDarkMode ? 'bg-gray-900' : 'bg-gray-50'
     }`}>
       {/* Header */}
@@ -88,10 +88,11 @@ export default function Bookmarks() {
         className="mb-6"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
         <div className="flex items-center justify-between">
           <div>
-            <h1 className={`text-3xl font-bold mb-2 ${
+            <h1 className={`text-3xl font-bold mb-2 gradient-text ${
               isDarkMode ? 'text-white' : 'text-gray-900'
             }`}>Bookmarks</h1>
             <p className={`${
@@ -103,11 +104,11 @@ export default function Bookmarks() {
           {bookmarks.length > 0 && (
             <motion.button
               onClick={() => setBookmarks([])}
-              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors btn-hover"
-              whileHover={{ scale: 1.05 }}
+              className="flex items-center gap-2 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 theme-transition-fast btn-sleek"
+              whileHover={{ scale: 1.08, y: -2 }}
               whileTap={{ scale: 0.95 }}
             >
-              <FaTrash className="text-sm" />
+              <FaTrash className="text-sm icon-sleek" />
               Clear All
             </motion.button>
           )}
@@ -126,7 +127,7 @@ export default function Bookmarks() {
             >
               <div className="relative mb-4">
                 <motion.div
-                  className="loading-spinner mx-auto"
+                  className="loading-spinner loading-enhanced mx-auto"
                   animate={{ rotate: 360 }}
                   transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
                 />
@@ -135,8 +136,8 @@ export default function Bookmarks() {
                 className={`${
                   isDarkMode ? 'text-gray-400' : 'text-gray-600'
                 }`}
-                animate={{ opacity: [0.5, 1, 0.5] }}
-                transition={{ duration: 1.5, repeat: Infinity }}
+                animate={{ opacity: [0.4, 1, 0.4] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
               >
                 Loading bookmarks...
               </motion.p>
@@ -147,14 +148,15 @@ export default function Bookmarks() {
         <AnimatePresence>
           {error && (
             <motion.div 
-              className={`border rounded-lg p-4 mb-4 ${
+              className={`border rounded-lg p-4 mb-4 theme-transition-fast ${
                 isDarkMode 
                   ? 'bg-red-900/20 border-red-800' 
                   : 'bg-red-50 border-red-200'
               }`}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: -20 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <p className={`${
                 isDarkMode ? 'text-red-200' : 'text-red-700'
@@ -170,15 +172,16 @@ export default function Bookmarks() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
-              <div className={`rounded-lg p-6 ${
+              <div className={`rounded-lg p-6 theme-transition-fast ${
                 isDarkMode ? 'bg-gray-800' : 'bg-white border border-gray-200'
               }`}>
                 <motion.div
-                  animate={{ scale: [1, 1.1, 1] }}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  animate={{ scale: [1, 1.15, 1] }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
                 >
-                  <FaBookmark className={`text-4xl mx-auto mb-4 ${
+                  <FaBookmark className={`text-4xl mx-auto mb-4 icon-sleek ${
                     isDarkMode ? 'text-gray-600' : 'text-gray-400'
                   }`} />
                 </motion.div>
@@ -192,8 +195,8 @@ export default function Bookmarks() {
                 </p>
                 <motion.a 
                 href="/" 
-                  className="inline-block px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600 transition-colors btn-hover"
-                  whileHover={{ scale: 1.05 }}
+                  className="inline-block px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600 theme-transition-fast btn-sleek"
+                  whileHover={{ scale: 1.08, y: -2 }}
                   whileTap={{ scale: 0.95 }}
                 >
                 Browse News
@@ -209,15 +212,17 @@ export default function Bookmarks() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
             >
               <motion.div 
-                className={`mb-4 p-4 border rounded-lg ${
+                className={`mb-4 p-4 border rounded-lg theme-transition-fast ${
                   isDarkMode 
                     ? 'bg-blue-900/20 border-blue-800' 
                     : 'bg-blue-50 border-blue-200'
                 }`}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.9, y: 10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.4, ease: "easeOut" }}
               >
                 <h3 className={`font-semibold mb-2 ${
                   isDarkMode ? 'text-blue-200' : 'text-blue-700'
@@ -229,14 +234,14 @@ export default function Bookmarks() {
                 </p>
               </motion.div>
             
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {bookmarks.map((article, index) => (
                   <motion.div 
                     key={article.url} 
                     className="relative"
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
+                    initial={{ opacity: 0, y: 40, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.6, delay: index * 0.08, ease: "easeOut" }}
                   >
                     <NewsCard
                       article={article}
@@ -244,12 +249,12 @@ export default function Bookmarks() {
                     />
                     <motion.button
                       onClick={() => handleUnbookmark(article)}
-                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors z-10"
+                      className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded-full hover:bg-red-600 theme-transition-fast z-10 btn-sleek"
                       title="Remove bookmark"
-                      whileHover={{ scale: 1.1 }}
+                      whileHover={{ scale: 1.15, rotate: 5 }}
                       whileTap={{ scale: 0.95 }}
                     >
-                      <FaTrash className="text-xs" />
+                      <FaTrash className="text-xs icon-sleek" />
                     </motion.button>
                   </motion.div>
                 ))}
@@ -262,12 +267,12 @@ export default function Bookmarks() {
       {/* Stats */}
       {!loading && !error && bookmarks.length > 0 && (
         <motion.div 
-          className={`mt-8 p-4 rounded-lg ${
+          className={`mt-8 p-4 rounded-lg theme-transition-fast ${
             isDarkMode ? 'bg-gray-800' : 'bg-white border border-gray-200'
           }`}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
         >
           <h3 className={`font-semibold mb-2 ${
             isDarkMode ? 'text-white' : 'text-gray-900'
